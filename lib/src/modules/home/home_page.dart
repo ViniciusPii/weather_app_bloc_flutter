@@ -7,7 +7,7 @@ import 'package:weather_app_bloc_flutter/src/core/infra/components/page_widget.d
 import 'package:weather_app_bloc_flutter/src/core/theme/app_dimension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_extension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
-import 'package:weather_app_bloc_flutter/src/models/home/controller/home_bloc.dart';
+import 'package:weather_app_bloc_flutter/src/modules/home/controller/home_bloc.dart';
 
 class HomePage extends PageWidget<HomeBloc> {
   HomePage({Key? key}) : super(key: key);

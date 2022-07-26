@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app_bloc_flutter/src/models/home/home_page.dart';
+import 'package:weather_app_bloc_flutter/src/modules/home/home_page.dart';
 
 class Routes {
   static const String home = '/';
