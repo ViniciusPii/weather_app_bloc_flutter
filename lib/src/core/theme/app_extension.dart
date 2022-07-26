@@ -7,10 +7,10 @@ class AppExtension {
   AppExtension._();
 
   //Colors
-  static const Color primary = AppColors.neutral600;
+  static const Color primary = AppColors.neutral800;
   static const Color primaryDark = AppColors.neutral800;
-  static const Color primaryLight = AppColors.neutral200;
-  static const Color secondary = AppColors.neutral;
+  static const Color primaryLight = AppColors.neutral100;
+  static const Color secondary = AppColors.neutral100;
   static const Color background = AppColors.white;
 
   //Text Color
