@@ -13,7 +13,11 @@ class HomeLoading extends HomeState {
 }
 
 class HomeSuccess extends HomeState {
-  HomeSuccess() : super();
+  HomeSuccess({
+    required this.weather,
+  }) : super();
+
+  final WeatherModel weather;
 }
 
 class HomeError extends HomeState {

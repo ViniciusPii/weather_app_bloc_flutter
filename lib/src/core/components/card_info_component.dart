@@ -7,11 +7,13 @@ class CardInfoComponent extends StatelessWidget {
   const CardInfoComponent({
     Key? key,
     required this.info,
-    required this.icon,
     required this.title,
+    required this.icon,
+    this.color,
   }) : super(key: key);
 
   final String info;
+  final Color? color;
   final String title;
   final IconData icon;
 
@@ -34,7 +36,7 @@ class CardInfoComponent extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: AppExtension.primary,
+                color: color ?? AppExtension.primary,
               ),
               const SizedBox(
                 width: AppDimension.size_1,

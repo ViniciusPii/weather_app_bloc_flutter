@@ -1,49 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/base_view_pagee.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/card_day_prevision_component.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/card_info_component.dart';
+import 'package:weather_app_bloc_flutter/src/core/components/three_bounce_component.dart';
+import 'package:weather_app_bloc_flutter/src/core/infra/components/bloc_builder.dart';
 import 'package:weather_app_bloc_flutter/src/core/infra/components/page_widget.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_dimension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_extension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
+import 'package:weather_app_bloc_flutter/src/models/weather_icon_model.dart';
+import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 import 'package:weather_app_bloc_flutter/src/modules/home/controller/home_bloc.dart';
 
 class HomePage extends PageWidget<HomeBloc> {
   HomePage({Key? key}) : super(key: key);
 
   @override
+  void onInit(BuildContext context) {
+    bloc.getWeather('campinas');
+    super.onInit(context);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BaseViewPage(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildCity(),
-          _buildPrevision(),
-          _buildInfo(),
-          _buildDaysPrevision(),
-        ],
+      body: BlocBuilder<HomeBloc, HomeState>(
+        bloc: bloc,
+        builder: (context, state) {
+          if (state is HomeLoading || state is HomeInitial) {
+            return const Center(
+              child: ThreeBounceComponent(
+                color: AppExtension.primary,
+              ),
+            );
+          }
+
+          if (state is HomeSuccess) {
+            return BaseViewPage(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildCity(state.weather),
+                _buildPrevision(state.weather),
+                _buildInfo(state.weather),
+                _buildDaysPrevision(state.weather),
+              ],
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
       ),
     );
   }
 
-  Widget _buildDaysPrevision() {
+  Widget _buildDaysPrevision(WeatherModel weather) {
     return SizedBox(
-      height: 135,
+      height: 115,
       child: ListView.separated(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return const CardDayPrevisionComponent(
-            max: '34 °',
-            min: '14 °',
-            day: 'Seg',
-            icon: FontAwesomeIcons.cloud,
-            condition: 'Chuva',
+          final forecast = weather.forecast[index];
+
+          return CardDayPrevisionComponent(
+            forecast: forecast,
+            icon: WeatherIconModel.weatherIcons[forecast.condition].toString(),
           );
         },
-        itemCount: 10,
+        itemCount: weather.forecast.length,
         separatorBuilder: (__, _) => const SizedBox(
           width: AppDimension.size_2,
         ),
@@ -51,48 +78,48 @@ class HomePage extends PageWidget<HomeBloc> {
     );
   }
 
-  Widget _buildInfo() {
+  Widget _buildInfo(WeatherModel weather) {
     return Column(
-      children: const [
+      children: [
         CardInfoComponent(
           icon: FontAwesomeIcons.clock,
           title: 'Hora da consulta',
-          info: '19:11',
+          info: weather.time,
         ),
         CardInfoComponent(
           icon: FontAwesomeIcons.wind,
           title: 'Vento',
-          info: '2.57 km/h',
+          info: weather.windSpeedy,
         ),
         CardInfoComponent(
-          icon: FontAwesomeIcons.droplet,
           title: 'Humidade do ar',
-          info: '89 %',
+          icon: FontAwesomeIcons.droplet,
+          info: '${weather.humidity.toString()} %',
         ),
       ],
     );
   }
 
-  Widget _buildPrevision() {
+  Widget _buildPrevision(WeatherModel weather) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        const Icon(
-          FontAwesomeIcons.cloudBolt,
-          size: AppDimension.size_10,
+        SvgPicture.asset(
+          WeatherIconModel.weatherIcons[weather.conditionSlug].toString(),
           color: AppExtension.primary,
+          height: 115,
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(
-              '19 °',
+              '${weather.temp} °',
               style: AppFonts.displayLarge().copyWith(
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              'Trovoadas',
+              weather.description,
               style: AppFonts.bodyLarge(light: true),
             ),
           ],
@@ -101,12 +128,12 @@ class HomePage extends PageWidget<HomeBloc> {
     );
   }
 
-  Widget _buildCity() {
+  Widget _buildCity(WeatherModel weather) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Hortolandia',
+          weather.city,
           style: AppFonts.headlineLarge(),
         ),
         AppDimension.spacing_0,

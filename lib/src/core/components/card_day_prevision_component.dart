@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_dimension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_extension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
+import 'package:weather_app_bloc_flutter/src/models/forecast_model.dart';
 
 class CardDayPrevisionComponent extends StatelessWidget {
   const CardDayPrevisionComponent({
     Key? key,
-    required this.max,
-    required this.min,
-    required this.day,
     required this.icon,
-    required this.condition,
+    required this.forecast,
   }) : super(key: key);
 
-  final String max;
-  final String min;
-  final String day;
-  final IconData icon;
-  final String condition;
+  final String icon;
+  final ForecastModel forecast;
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +32,15 @@ class CardDayPrevisionComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            day,
+            forecast.weekday,
             style: AppFonts.labelLarge(),
           ),
           AppDimension.spacing_2,
           Row(
             children: [
-              Icon(
+              SvgPicture.asset(
                 icon,
+                height: AppDimension.size_6,
                 color: AppExtension.primary,
               ),
               const SizedBox(
@@ -52,22 +49,17 @@ class CardDayPrevisionComponent extends StatelessWidget {
               Column(
                 children: [
                   Text(
-                    max,
+                    '${forecast.max}°',
                     style: AppFonts.labelMedium(),
                   ),
                   Text(
-                    min,
+                    '${forecast.min}°',
                     style: AppFonts.labelMedium(),
                   ),
                 ],
               )
             ],
           ),
-          AppDimension.spacing_2,
-          Text(
-            'Chuva',
-            style: AppFonts.labelLarge(),
-          )
         ],
       ),
     );
