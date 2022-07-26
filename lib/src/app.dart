@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:weather_app_bloc_flutter/src/core/infra/navigator/app_navigator.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_extension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_theme.dart';
@@ -18,6 +19,10 @@ class App extends StatelessWidget {
         systemNavigationBarColor: AppExtension.background,
       ),
       child: MaterialApp(
+        localizationsDelegates: const [
+          GlobalWidgetsLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+        ],
         title: 'Flutter Demo',
         routes: Routes().routes,
         theme: AppTheme.defaultTheme,

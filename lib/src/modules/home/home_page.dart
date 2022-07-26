@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/base_view_pagee.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/card_day_prevision_component.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/card_info_component.dart';
@@ -19,7 +20,7 @@ class HomePage extends PageWidget<HomeBloc> {
 
   @override
   void onInit(BuildContext context) {
-    bloc.getWeather('campinas');
+    bloc.getWeather('hortolandia');
     super.onInit(context);
   }
 
@@ -82,13 +83,13 @@ class HomePage extends PageWidget<HomeBloc> {
     return Column(
       children: [
         CardInfoComponent(
-          icon: FontAwesomeIcons.clock,
-          title: 'Hora da consulta',
           info: weather.time,
+          title: 'Atualizado às',
+          icon: FontAwesomeIcons.clock,
         ),
         CardInfoComponent(
-          icon: FontAwesomeIcons.wind,
           title: 'Vento',
+          icon: FontAwesomeIcons.wind,
           info: weather.windSpeedy,
         ),
         CardInfoComponent(
@@ -138,7 +139,7 @@ class HomePage extends PageWidget<HomeBloc> {
         ),
         AppDimension.spacing_0,
         Text(
-          'Segunda, Jul 25',
+          DateFormat("EEEE,  MMM d", "pt_BR").format(DateTime.now()),
           style: AppFonts.bodyLarge(light: true),
         ),
       ],
