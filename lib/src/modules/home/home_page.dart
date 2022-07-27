@@ -14,7 +14,7 @@ import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_icon_model.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 import 'package:weather_app_bloc_flutter/src/modules/home/controller/home_bloc.dart';
-import 'package:weather_app_bloc_flutter/src/modules/home/controller/widgets/home_error_widget.dart';
+import 'package:weather_app_bloc_flutter/src/modules/home/widgets/home_error_widget.dart';
 
 class HomePage extends PageWidget<HomeBloc> {
   HomePage({Key? key}) : super(key: key);
