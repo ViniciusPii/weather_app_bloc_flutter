@@ -22,18 +22,11 @@ class HomeBloc extends Bloc<HomeState> {
   double lat = 0.0;
   double long = 0.0;
 
-  Future<void> _getPosition() async {
-    Position position = await _geolocationRepository.currentPosition();
-    lat = position.latitude;
-    long = position.longitude;
-  }
-
-  Future<void> getWeather() async {
+  Future<void> getPositionAndWeather() async {
     emit(HomeLoading());
     try {
+      await _getWeather();
       await _getPosition();
-      final weather = await _weatherRepository.getWeather(lat, long);
-      emit(HomeSuccess(weather: weather));
     } on AppException catch (e) {
       if (e.error == AppCodeErrors.geolocation) {
         emit(HomeGeolocationError(message: e.message));
@@ -41,5 +34,17 @@ class HomeBloc extends Bloc<HomeState> {
         emit(HomeError(message: e.message));
       }
     }
+  }
+
+  Future<void> _getPosition() async {
+    Position position = await _geolocationRepository.currentPosition();
+    lat = position.latitude;
+    long = position.longitude;
+  }
+
+  Future<void> _getWeather() async {
+    await _getPosition();
+    final weather = await _weatherRepository.getWeather(lat, long);
+    emit(HomeSuccess(weather: weather));
   }
 }

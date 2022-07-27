@@ -21,7 +21,7 @@ class HomePage extends PageWidget<HomeBloc> {
 
   @override
   void onInit(BuildContext context) {
-    bloc.getWeather();
+    bloc.getPositionAndWeather();
     super.onInit(context);
   }
 
@@ -42,14 +42,14 @@ class HomePage extends PageWidget<HomeBloc> {
               title: state.message,
               info:
                   'Precisamos da sua localização para que possamos mostrar a condição do tempo na sua região!',
-              fun: () => bloc.getWeather(),
+              fun: () => bloc.getPositionAndWeather(),
             );
           } else if (state is HomeError) {
             return HomeErrorWidget(
               title: state.message,
               info:
                   'Verifique sua conexão com a internet ou tente novamente para buscar o tempo na sua região!',
-              fun: () => bloc.getWeather(),
+              fun: () => bloc.getPositionAndWeather(),
             );
           } else if (state is HomeSuccess) {
             return BaseViewPage(
