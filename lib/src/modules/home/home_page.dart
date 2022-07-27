@@ -48,7 +48,7 @@ class HomePage extends PageWidget<HomeBloc> {
             return HomeErrorWidget(
               title: state.message,
               info:
-                  'Verifique sua conexão com a internet ou tente novamente para buscar o tempo na usa região!',
+                  'Verifique sua conexão com a internet ou tente novamente para buscar o tempo na sua região!',
               fun: () => bloc.getWeather(),
             );
           } else if (state is HomeSuccess) {
