@@ -25,8 +25,8 @@ class HomeBloc extends Bloc<HomeState> {
   Future<void> getPositionAndWeather() async {
     emit(HomeLoading());
     try {
-      await _getWeather();
       await _getPosition();
+      await _getWeather();
     } on AppException catch (e) {
       if (e.error == AppCodeErrors.geolocation) {
         emit(HomeGeolocationError(message: e.message));
