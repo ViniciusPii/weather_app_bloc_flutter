@@ -1,4 +1,3 @@
-import 'package:geolocator/geolocator.dart';
 import 'package:weather_app_bloc_flutter/src/core/exceptions/app_exception.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 import 'package:weather_app_bloc_flutter/src/repositories/geolocation/geolocation_repository.dart';
@@ -19,14 +18,17 @@ class HomeBloc extends Bloc<HomeState> {
   final WeatherRepository _weatherRepository;
   final GeolocationRepository _geolocationRepository;
 
-  double lat = 0.0;
-  double long = 0.0;
-
   Future<void> getPositionAndWeather() async {
     emit(HomeLoading());
     try {
-      await _getPosition();
-      await _getWeather();
+      final position = await _geolocationRepository.currentPosition();
+
+      final weather = await _weatherRepository.getWeather(
+        position.latitude,
+        position.longitude,
+      );
+
+      emit(HomeSuccess(weather: weather));
     } on AppException catch (e) {
       if (e.error == AppCodeErrors.geolocation) {
         emit(HomeGeolocationError(message: e.message));
@@ -34,17 +36,5 @@ class HomeBloc extends Bloc<HomeState> {
         emit(HomeError(message: e.message));
       }
     }
-  }
-
-  Future<void> _getPosition() async {
-    Position position = await _geolocationRepository.currentPosition();
-    lat = position.latitude;
-    long = position.longitude;
-  }
-
-  Future<void> _getWeather() async {
-    await _getPosition();
-    final weather = await _weatherRepository.getWeather(lat, long);
-    emit(HomeSuccess(weather: weather));
   }
 }
