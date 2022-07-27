@@ -41,6 +41,7 @@ dependencies:
   flutter_svg: ^1.1.1+1
   flutter_localizations:
     sdk: flutter
+  geolocator: ^9.0.1
 
 dev_dependencies:
   flutter_test:

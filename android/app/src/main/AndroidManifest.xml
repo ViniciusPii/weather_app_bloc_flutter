@@ -2,6 +2,9 @@
     package="br.com.viniciuspih.weather_app_bloc_flutter">
 
    <uses-permission android:name="android.permission.INTERNET"/>
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+   <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+   <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
    <application
         android:label="Tempo"
         android:name="${applicationName}"

@@ -12,8 +12,8 @@ class WeatherRepositoryImpl implements WeatherRepository {
   final Dio _dio;
 
   @override
-  Future<WeatherModel> getWeather(String city) async {
-    final response = await _dio.get(AppEnv.urlByName + city);
+  Future<WeatherModel> getWeather(double lat, double long) async {
+    final response = await _dio.get(AppEnv.urlLocation(lat, long));
 
     final weather = WeatherModel.fromMap(response.data['results']);
 

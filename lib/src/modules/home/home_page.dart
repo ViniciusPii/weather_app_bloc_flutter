@@ -20,7 +20,7 @@ class HomePage extends PageWidget<HomeBloc> {
 
   @override
   void onInit(BuildContext context) {
-    bloc.getWeather('hortolandia');
+    bloc.getWeather();
     super.onInit(context);
   }
 
@@ -34,6 +34,43 @@ class HomePage extends PageWidget<HomeBloc> {
             return const Center(
               child: ThreeBounceComponent(
                 color: AppExtension.primary,
+              ),
+            );
+          }
+
+          if (state is HomeError) {
+            return Center(
+              child: BaseViewPage(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.warning_amber_rounded,
+                    size: AppDimension.size_5,
+                    color: AppExtension.primary,
+                  ),
+                  AppDimension.spacing_2,
+                  Text(
+                    state.message,
+                    style: AppFonts.titleLarge(),
+                  ),
+                  AppDimension.spacing_0,
+                  Text(
+                    'Nosso app precisa da sua localização para que possamos mostra as condições do tempo na sua região!',
+                    style: AppFonts.bodyLarge(light: true),
+                    textAlign: TextAlign.center,
+                  ),
+                  AppDimension.spacing_2,
+                  Text(
+                    'Se por acaso você negou permanetemente a permissão, limpe o cache do aplicativo, ou desinstale e instale novamente!',
+                    style: AppFonts.bodyLarge(light: true),
+                    textAlign: TextAlign.center,
+                  ),
+                  AppDimension.spacing_5,
+                  ElevatedButton(
+                    onPressed: () => bloc.getWeather(),
+                    child: const Text('Tentar Novamente'),
+                  ),
+                ],
               ),
             );
           }
