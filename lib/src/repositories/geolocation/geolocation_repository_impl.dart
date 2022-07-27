@@ -6,33 +6,34 @@ import 'geolocation_repository.dart';
 class GeolocationRepositoryImpl implements GeolocationRepository {
   @override
   Future<Position> currentPosition() async {
-    LocationPermission permission;
+    try {
+      LocationPermission permission;
 
-    bool active = await Geolocator.isLocationServiceEnabled();
+      bool active = await Geolocator.isLocationServiceEnabled();
 
-    if (!active) {
-      throw AppException(
-        message: 'Você precisa aceitar a permissão para utilizar o app!',
-      );
-    }
-
-    permission = await Geolocator.checkPermission();
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        throw AppException(
-          message: 'Você precisa aceitar a permissão para utilizar o app!',
-        );
+      if (!active) {
+        Future.error('Você precisa aceitar a permissão para utilizar o app!');
       }
-    }
 
-    if (permission == LocationPermission.deniedForever) {
+      permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          Future.error('Você precisa aceitar a permissão para utilizar o app!');
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        Future.error('Você precisa aceitar a permissão para utilizar o app!');
+      }
+
+      return await Geolocator.getCurrentPosition();
+    } catch (e) {
       throw AppException(
-        message: 'Você precisa aceitar a permissão para utilizar o app!',
+        message: 'Permissão obrigatória!',
+        error: AppCodeErrors.geolocation,
       );
     }
-
-    return await Geolocator.getCurrentPosition();
   }
 }

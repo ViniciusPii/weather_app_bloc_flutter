@@ -27,3 +27,11 @@ class HomeError extends HomeState {
 
   final String message;
 }
+
+class HomeGeolocationError extends HomeState {
+  HomeGeolocationError({
+    required this.message,
+  }) : super();
+
+  final String message;
+}

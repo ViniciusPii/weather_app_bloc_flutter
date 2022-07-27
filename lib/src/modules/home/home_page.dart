@@ -14,6 +14,7 @@ import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_icon_model.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 import 'package:weather_app_bloc_flutter/src/modules/home/controller/home_bloc.dart';
+import 'package:weather_app_bloc_flutter/src/modules/home/controller/widgets/home_error_widget.dart';
 
 class HomePage extends PageWidget<HomeBloc> {
   HomePage({Key? key}) : super(key: key);
@@ -36,46 +37,21 @@ class HomePage extends PageWidget<HomeBloc> {
                 color: AppExtension.primary,
               ),
             );
-          }
-
-          if (state is HomeError) {
-            return Center(
-              child: BaseViewPage(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.warning_amber_rounded,
-                    size: AppDimension.size_5,
-                    color: AppExtension.primary,
-                  ),
-                  AppDimension.spacing_2,
-                  Text(
-                    state.message,
-                    style: AppFonts.titleLarge(),
-                  ),
-                  AppDimension.spacing_0,
-                  Text(
-                    'Nosso app precisa da sua localização para que possamos mostra as condições do tempo na sua região!',
-                    style: AppFonts.bodyLarge(light: true),
-                    textAlign: TextAlign.center,
-                  ),
-                  AppDimension.spacing_2,
-                  Text(
-                    'Se por acaso você negou permanetemente a permissão, limpe o cache do aplicativo, ou desinstale e instale novamente!',
-                    style: AppFonts.bodyLarge(light: true),
-                    textAlign: TextAlign.center,
-                  ),
-                  AppDimension.spacing_5,
-                  ElevatedButton(
-                    onPressed: () => bloc.getWeather(),
-                    child: const Text('Tentar Novamente'),
-                  ),
-                ],
-              ),
+          } else if (state is HomeGeolocationError) {
+            return HomeErrorWidget(
+              title: state.message,
+              info:
+                  'Precisamos da sua localização para que possamos mostrar a condição do tempo na sua região!',
+              fun: () => bloc.getWeather(),
             );
-          }
-
-          if (state is HomeSuccess) {
+          } else if (state is HomeError) {
+            return HomeErrorWidget(
+              title: state.message,
+              info:
+                  'Verifique sua conexão com a internet ou tente novamente para buscar o tempo na usa região!',
+              fun: () => bloc.getWeather(),
+            );
+          } else if (state is HomeSuccess) {
             return BaseViewPage(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,

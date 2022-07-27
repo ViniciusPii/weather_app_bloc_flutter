@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:weather_app_bloc_flutter/src/core/exceptions/app_exception.dart';
 import 'package:weather_app_bloc_flutter/src/core/utils/app_env.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 
@@ -13,10 +14,17 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
   @override
   Future<WeatherModel> getWeather(double lat, double long) async {
-    final response = await _dio.get(AppEnv.urlLocation(lat, long));
+    try {
+      final response = await _dio.get(AppEnv.urlLocation(lat, long));
 
-    final weather = WeatherModel.fromMap(response.data['results']);
+      final weather = WeatherModel.fromMap(response.data['results']);
 
-    return weather;
+      return weather;
+    } catch (e) {
+      throw AppException(
+        message: 'Indisponibilidade no sitema!',
+        error: AppCodeErrors.weather,
+      );
+    }
   }
 }

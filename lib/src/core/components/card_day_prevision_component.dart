@@ -32,7 +32,7 @@ class CardDayPrevisionComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            forecast.weekday,
+            '${forecast.weekday} - ${forecast.date}',
             style: AppFonts.labelLarge(),
           ),
           AppDimension.spacing_2,

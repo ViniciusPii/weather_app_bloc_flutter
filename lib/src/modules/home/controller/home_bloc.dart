@@ -22,24 +22,24 @@ class HomeBloc extends Bloc<HomeState> {
   double lat = 0.0;
   double long = 0.0;
 
-  Future<void> getPosition() async {
-    try {
-      Position position = await _geolocationRepository.currentPosition();
-      lat = position.latitude;
-      long = position.longitude;
-    } catch (e) {
-      throw AppException(message: 'Permissão obrigatória!');
-    }
+  Future<void> _getPosition() async {
+    Position position = await _geolocationRepository.currentPosition();
+    lat = position.latitude;
+    long = position.longitude;
   }
 
   Future<void> getWeather() async {
     emit(HomeLoading());
     try {
-      await getPosition();
+      await _getPosition();
       final weather = await _weatherRepository.getWeather(lat, long);
       emit(HomeSuccess(weather: weather));
     } on AppException catch (e) {
-      emit(HomeError(message: e.message));
+      if (e.error == AppCodeErrors.geolocation) {
+        emit(HomeGeolocationError(message: e.message));
+      } else if (e.error == AppCodeErrors.weather) {
+        emit(HomeError(message: e.message));
+      }
     }
   }
 }
