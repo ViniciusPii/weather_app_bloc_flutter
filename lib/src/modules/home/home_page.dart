@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:weather_app_bloc_flutter/src/core/components/base_view_pagee.dart';
+import 'package:weather_app_bloc_flutter/src/core/components/base_view_component.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/card_day_prevision_component.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/card_info_component.dart';
 import 'package:weather_app_bloc_flutter/src/core/components/three_bounce_component.dart';
@@ -52,7 +52,7 @@ class HomePage extends PageWidget<HomeBloc> {
               fun: () => bloc.getPositionAndWeather(),
             );
           } else if (state is HomeSuccess) {
-            return BaseViewPage(
+            return BaseViewComponent(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -70,45 +70,33 @@ class HomePage extends PageWidget<HomeBloc> {
     );
   }
 
-  Widget _buildDaysPrevision(WeatherModel weather) {
-    return SizedBox(
-      height: 115,
-      child: ListView.separated(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) {
-          final forecast = weather.forecast[index];
-
-          return CardDayPrevisionComponent(
-            forecast: forecast,
-            icon: WeatherIconModel.weatherIcons[forecast.condition].toString(),
-          );
-        },
-        itemCount: weather.forecast.length,
-        separatorBuilder: (__, _) => const SizedBox(
-          width: AppDimension.size_2,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInfo(WeatherModel weather) {
-    return Column(
+  Widget _buildCity(WeatherModel weather) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CardInfoComponent(
-          info: weather.time,
-          title: 'Atualizado às',
-          icon: FontAwesomeIcons.clock,
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                weather.city,
+                style: AppFonts.headlineLarge(),
+              ),
+              AppDimension.spacing_0,
+              Text(
+                DateFormat("EEEE,  MMM d", "pt_BR").format(DateTime.now()),
+                style: AppFonts.bodyLarge(light: true),
+              ),
+            ],
+          ),
         ),
-        CardInfoComponent(
-          title: 'Vento',
-          icon: FontAwesomeIcons.wind,
-          info: weather.windSpeedy,
-        ),
-        CardInfoComponent(
-          title: 'Humidade do ar',
-          icon: FontAwesomeIcons.droplet,
-          info: '${weather.humidity.toString()} %',
+        IconButton(
+          onPressed: () => bloc.getPositionAndWeather(),
+          icon: const Icon(
+            Icons.refresh_rounded,
+            size: AppDimension.size_4,
+            color: AppExtension.primary,
+          ),
         ),
       ],
     );
@@ -142,20 +130,47 @@ class HomePage extends PageWidget<HomeBloc> {
     );
   }
 
-  Widget _buildCity(WeatherModel weather) {
+  Widget _buildInfo(WeatherModel weather) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          weather.city,
-          style: AppFonts.headlineLarge(),
+        CardInfoComponent(
+          info: weather.time,
+          title: 'Atualizado às',
+          icon: FontAwesomeIcons.clock,
         ),
-        AppDimension.spacing_0,
-        Text(
-          DateFormat("EEEE,  MMM d", "pt_BR").format(DateTime.now()),
-          style: AppFonts.bodyLarge(light: true),
+        CardInfoComponent(
+          title: 'Vento',
+          icon: FontAwesomeIcons.wind,
+          info: weather.windSpeedy,
+        ),
+        CardInfoComponent(
+          title: 'Humidade do ar',
+          icon: FontAwesomeIcons.droplet,
+          info: '${weather.humidity.toString()} %',
         ),
       ],
+    );
+  }
+
+  Widget _buildDaysPrevision(WeatherModel weather) {
+    return SizedBox(
+      height: 115,
+      child: ListView.separated(
+        shrinkWrap: true,
+        scrollDirection: Axis.horizontal,
+        itemBuilder: (context, index) {
+          final forecast = weather.forecast[index];
+
+          return CardDayPrevisionComponent(
+            forecast: forecast,
+            icon: WeatherIconModel.weatherIcons[forecast.condition].toString(),
+          );
+        },
+        itemCount: weather.forecast.length,
+        separatorBuilder: (__, _) => const SizedBox(
+          width: AppDimension.size_2,
+        ),
+      ),
     );
   }
 }

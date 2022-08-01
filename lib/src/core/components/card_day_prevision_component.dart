@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_dimension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_extension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
@@ -32,7 +33,7 @@ class CardDayPrevisionComponent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            '${forecast.weekday} - ${forecast.date}',
+            _changeTitle(),
             style: AppFonts.labelLarge(),
           ),
           AppDimension.spacing_2,
@@ -63,5 +64,15 @@ class CardDayPrevisionComponent extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _changeTitle() {
+    final day = DateFormat('dd/MM').format(DateTime.now());
+
+    if (forecast.date == day) {
+      return 'Hoje';
+    } else {
+      return '${forecast.weekday} - ${forecast.date}';
+    }
   }
 }
