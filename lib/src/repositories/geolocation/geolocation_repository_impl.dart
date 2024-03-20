@@ -12,7 +12,10 @@ class GeolocationRepositoryImpl implements GeolocationRepository {
       bool active = await Geolocator.isLocationServiceEnabled();
 
       if (!active) {
-        Future.error('Você precisa aceitar a permissão para utilizar o app!');
+        throw AppException(
+          error: AppCodeErrors.geolocation,
+          message: 'Ative o serviço de Geolocalização',
+        );
       }
 
       permission = await Geolocator.checkPermission();
@@ -20,20 +23,28 @@ class GeolocationRepositoryImpl implements GeolocationRepository {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          Future.error('Você precisa aceitar a permissão para utilizar o app!');
+          throw AppException(
+            error: AppCodeErrors.geolocation,
+            message: 'Você negou a Permissão!',
+          );
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        Future.error('Você precisa aceitar a permissão para utilizar o app!');
+        throw AppException(
+          error: AppCodeErrors.geolocation,
+          message: 'Não podemos mais pedir permissão!',
+        );
       }
 
       return await Geolocator.getCurrentPosition();
-    } catch (e) {
+    } on AppException catch (e) {
       throw AppException(
-        message: 'Permissão obrigatória!',
         error: AppCodeErrors.geolocation,
+        message: e.message,
       );
+    } catch (e) {
+      throw AppGenericException(message: 'Erro Genérico');
     }
   }
 }

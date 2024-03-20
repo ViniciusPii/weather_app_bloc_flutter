@@ -9,6 +9,7 @@ class AppTheme {
 
   static ThemeData get defaultTheme => ThemeData(
         fontFamily: AppExtension.fontFamily,
+        useMaterial3: false,
         scaffoldBackgroundColor: AppExtension.background,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         elevatedButtonTheme: ElevatedButtonThemeData(

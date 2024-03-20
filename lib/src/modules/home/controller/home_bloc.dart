@@ -30,11 +30,7 @@ class HomeBloc extends Bloc<HomeState> {
 
       emit(HomeSuccess(weather: weather));
     } on AppException catch (e) {
-      if (e.error == AppCodeErrors.geolocation) {
-        emit(HomeGeolocationError(message: e.message));
-      } else if (e.error == AppCodeErrors.weather) {
-        emit(HomeError(message: e.message));
-      }
+      emit(HomeError(message: e.message));
     }
   }
 }

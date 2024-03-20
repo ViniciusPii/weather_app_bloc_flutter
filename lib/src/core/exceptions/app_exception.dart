@@ -1,4 +1,4 @@
-enum AppCodeErrors {
+enum AppCodeErrors implements Exception {
   weather,
   geolocation,
 }
@@ -11,4 +11,12 @@ class AppException {
 
   final String message;
   final AppCodeErrors error;
+}
+
+class AppGenericException implements Exception {
+  AppGenericException({
+    required this.message,
+  });
+
+  final String message;
 }
