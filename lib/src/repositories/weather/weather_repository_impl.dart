@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:weather_app_bloc_flutter/src/app_env.dart';
 import 'package:weather_app_bloc_flutter/src/core/exceptions/app_exception.dart';
-import 'package:weather_app_bloc_flutter/src/core/utils/app_env.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 
 import 'weather_repository.dart';
