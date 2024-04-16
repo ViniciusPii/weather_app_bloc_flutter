@@ -5,10 +5,10 @@ import 'package:weather_app_bloc_flutter/src/core/theme/app_dimension.dart';
 
 class DelayTween extends Tween<double> {
   DelayTween({
-    double? begin,
-    double? end,
+    super.begin,
+    super.end,
     required this.delay,
-  }) : super(begin: begin, end: end);
+  });
 
   final double delay;
 
@@ -21,7 +21,7 @@ class DelayTween extends Tween<double> {
 
 class ThreeBounceComponent extends StatefulWidget {
   const ThreeBounceComponent({
-    Key? key,
+    super.key,
     this.size = AppDimension.size_4,
     this.color,
     this.duration = const Duration(milliseconds: 1400),
@@ -31,8 +31,7 @@ class ThreeBounceComponent extends StatefulWidget {
           !(itemBuilder is IndexedWidgetBuilder && color is Color) &&
               !(itemBuilder == null && color == null),
           'You should specify either a itemBuilder or a color',
-        ),
-        super(key: key);
+        );
 
   final double size;
   final Color? color;

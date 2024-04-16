@@ -5,12 +5,12 @@ import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
 
 class CardInfoComponent extends StatelessWidget {
   const CardInfoComponent({
-    Key? key,
+    super.key,
     required this.info,
     required this.title,
     required this.icon,
     this.color,
-  }) : super(key: key);
+  });
 
   final String info;
   final Color? color;

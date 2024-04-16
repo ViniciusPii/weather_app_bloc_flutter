@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app_bloc_flutter/src/core/infra/bloc.dart';
-import 'package:weather_app_bloc_flutter/src/core/infra/di/dependon.dart';
+import 'package:weather_app_bloc_flutter/src/injection.dart';
 
 abstract class PageWidget<B extends Bloc> extends StatefulWidget {
   PageWidget({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   Widget build(BuildContext context);
 
@@ -13,7 +13,7 @@ abstract class PageWidget<B extends Bloc> extends StatefulWidget {
 
   void dispose() {}
 
-  final B _bloc = get<B>();
+  final B _bloc = di.get<B>();
 
   B get bloc => _bloc;
 

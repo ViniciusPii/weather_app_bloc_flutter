@@ -17,7 +17,7 @@ import 'package:weather_app_bloc_flutter/src/modules/home/controller/home_bloc.d
 import 'package:weather_app_bloc_flutter/src/modules/home/widgets/home_error_widget.dart';
 
 class HomePage extends PageWidget<HomeBloc> {
-  HomePage({Key? key}) : super(key: key);
+  HomePage({super.key});
 
   @override
   void onInit(BuildContext context) {
@@ -108,8 +108,11 @@ class HomePage extends PageWidget<HomeBloc> {
       children: [
         SvgPicture.asset(
           WeatherIconModel.weatherIcons[weather.conditionSlug].toString(),
-          color: AppExtension.primary,
           height: 115,
+          colorFilter: const ColorFilter.mode(
+            AppExtension.primary,
+            BlendMode.srcIn,
+          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 
 class InputComponent extends StatelessWidget {
   const InputComponent({
-    Key? key,
+    super.key,
     required this.label,
     required this.validator,
     this.masks,
@@ -14,7 +14,7 @@ class InputComponent extends StatelessWidget {
     this.obscured = false,
     this.capitalization = true,
     this.textInputAction = TextInputAction.next,
-  }) : super(key: key);
+  });
 
   final String label;
   final bool obscured;

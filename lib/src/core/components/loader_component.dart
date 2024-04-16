@@ -5,12 +5,12 @@ import 'package:weather_app_bloc_flutter/src/core/theme/app_extension.dart';
 
 class LoaderComponent extends StatelessWidget {
   const LoaderComponent({
-    Key? key,
+    super.key,
     required this.loading,
     required this.child,
     this.size,
     this.color = AppExtension.primary,
-  }) : super(key: key);
+  });
 
   final Color? color;
   final bool loading;

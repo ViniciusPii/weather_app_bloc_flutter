@@ -8,10 +8,10 @@ import 'package:weather_app_bloc_flutter/src/models/forecast_model.dart';
 
 class CardDayPrevisionComponent extends StatelessWidget {
   const CardDayPrevisionComponent({
-    Key? key,
+    super.key,
     required this.icon,
     required this.forecast,
-  }) : super(key: key);
+  });
 
   final String icon;
   final ForecastModel forecast;
@@ -42,7 +42,10 @@ class CardDayPrevisionComponent extends StatelessWidget {
               SvgPicture.asset(
                 icon,
                 height: AppDimension.size_6,
-                color: AppExtension.primary,
+                colorFilter: const ColorFilter.mode(
+                  AppExtension.primary,
+                  BlendMode.srcIn,
+                ),
               ),
               const SizedBox(
                 width: AppDimension.size_2,

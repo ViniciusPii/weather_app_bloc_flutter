@@ -3,10 +3,10 @@ import 'package:weather_app_bloc_flutter/src/core/infra/bloc.dart';
 
 class BlocBuilder<B extends Bloc, S extends Object> extends StatelessWidget {
   const BlocBuilder({
-    Key? key,
+    super.key,
     required this.bloc,
     required this.builder,
-  }) : super(key: key);
+  });
 
   final B bloc;
   final Widget Function(BuildContext contex, S state) builder;

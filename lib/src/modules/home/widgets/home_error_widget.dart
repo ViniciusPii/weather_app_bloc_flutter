@@ -6,11 +6,11 @@ import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
 
 class HomeErrorWidget extends StatelessWidget {
   const HomeErrorWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.info,
     required this.fun,
-  }) : super(key: key);
+  });
 
   final String info;
   final String title;
