@@ -1,13 +1,12 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app_bloc_flutter/src/core/exceptions/app_exception.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 import 'package:weather_app_bloc_flutter/src/repositories/geolocation/geolocation_repository.dart';
 import 'package:weather_app_bloc_flutter/src/repositories/weather/weather_repository.dart';
 
-import '/src/core/infra/bloc.dart';
-
 part 'home_state.dart';
 
-class HomeBloc extends Bloc<HomeState> {
+class HomeBloc extends Cubit<HomeState> {
   HomeBloc({
     required WeatherRepository weatherRepository,
     required GeolocationRepository geolocationRepository,

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:weather_app_bloc_flutter/src/core/infra/navigator/app_navigator.dart';
-import 'package:weather_app_bloc_flutter/src/core/theme/app_extension.dart';
+import 'package:weather_app_bloc_flutter/src/core/theme/app_styles.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_theme.dart';
 import 'package:weather_app_bloc_flutter/src/routes/routes.dart';
 
@@ -16,7 +15,7 @@ class App extends StatelessWidget {
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: AppExtension.background,
+        systemNavigationBarColor: AppStyles.background,
       ),
       child: MaterialApp(
         localizationsDelegates: const [
@@ -27,7 +26,6 @@ class App extends StatelessWidget {
         routes: Routes().routes,
         theme: AppTheme.defaultTheme,
         debugShowCheckedModeBanner: false,
-        navigatorKey: AppNavigator.navigatorKey,
       ),
     );
   }

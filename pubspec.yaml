@@ -44,6 +44,8 @@ dependencies:
   google_fonts: ^6.2.1
   intl: ^0.18.1
   get_it: ^7.7.0
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.5
 
 
 flutter_native_splash:

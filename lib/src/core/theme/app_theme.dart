@@ -1,29 +1,39 @@
 import 'package:flutter/material.dart';
 
-import 'app_dimension.dart';
-import 'app_extension.dart';
-import 'app_fonts.dart';
+import 'app_styles.dart';
+import 'infra/app_colors.dart';
+import 'infra/app_dimension.dart';
+import 'infra/app_fonts.dart';
 
 class AppTheme {
   AppTheme._();
 
   static ThemeData get defaultTheme => ThemeData(
-        fontFamily: AppExtension.fontFamily,
-        useMaterial3: false,
-        scaffoldBackgroundColor: AppExtension.background,
+        fontFamily: AppStyles.fontFamily,
+        scaffoldBackgroundColor: AppStyles.background,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             minimumSize: const Size(
               double.infinity,
-              AppDimension.size_5,
+              AppDimension.mega,
             ),
             textStyle: AppFonts.bodyLarge(),
           ),
         ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: AppExtension.primary,
-          secondary: AppExtension.secondary,
+        inputDecorationTheme: const InputDecorationTheme(
+          filled: true,
+          isDense: true,
+          fillColor: AppColors.neutral100,
+          contentPadding: EdgeInsets.symmetric(
+            vertical: AppDimension.medium,
+            horizontal: AppDimension.medium,
+          ),
         ),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: AppStyles.primary,
+          secondary: AppStyles.secondary,
+        ),
+        useMaterial3: false,
       );
 }

@@ -1,66 +1,77 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:weather_app_bloc_flutter/src/core/components/base_view_component.dart';
-import 'package:weather_app_bloc_flutter/src/core/components/card_day_prevision_component.dart';
-import 'package:weather_app_bloc_flutter/src/core/components/card_info_component.dart';
-import 'package:weather_app_bloc_flutter/src/core/components/three_bounce_component.dart';
-import 'package:weather_app_bloc_flutter/src/core/infra/components/bloc_builder.dart';
-import 'package:weather_app_bloc_flutter/src/core/infra/components/page_widget.dart';
-import 'package:weather_app_bloc_flutter/src/core/theme/app_dimension.dart';
-import 'package:weather_app_bloc_flutter/src/core/theme/app_extension.dart';
-import 'package:weather_app_bloc_flutter/src/core/theme/app_fonts.dart';
+import 'package:weather_app_bloc_flutter/src/core/theme/app_styles.dart';
+import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_dimension.dart';
+import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_fonts.dart';
+import 'package:weather_app_bloc_flutter/src/core/ui/base_bloc_state.dart';
+import 'package:weather_app_bloc_flutter/src/core/ui/components/spacing_page.dart';
+import 'package:weather_app_bloc_flutter/src/core/ui/components/three_bounce_component.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_icon_model.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 import 'package:weather_app_bloc_flutter/src/modules/home/controller/home_bloc.dart';
+import 'package:weather_app_bloc_flutter/src/modules/home/widgets/card_day_prevision_component.dart';
+import 'package:weather_app_bloc_flutter/src/modules/home/widgets/card_info_component.dart';
 import 'package:weather_app_bloc_flutter/src/modules/home/widgets/home_error_widget.dart';
 
-class HomePage extends PageWidget<HomeBloc> {
-  HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  void onInit(BuildContext context) {
-    bloc.getPositionAndWeather();
-    super.onInit(context);
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
+  @override
+  void onReady(BuildContext context) {
+    controller.getPositionAndWeather();
+    super.onReady(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<HomeBloc, HomeState>(
-        bloc: bloc,
+        bloc: controller,
         builder: (context, state) {
-          if (state is HomeLoading || state is HomeInitial) {
-            return const Center(
-              child: ThreeBounceComponent(
-                color: AppExtension.primary,
-              ),
-            );
-          } else if (state is HomeGeolocationError) {
+          if (state is HomeLoading) {
+            return const Center(child: ThreeBounceComponent());
+          }
+
+          if (state is HomeGeolocationError) {
             return HomeErrorWidget(
               title: state.message,
               info:
                   'Precisamos da sua localização para que possamos mostrar a condição do tempo na sua região!',
-              fun: () => bloc.getPositionAndWeather(),
+              fun: () => controller.getPositionAndWeather(),
             );
-          } else if (state is HomeError) {
+          }
+
+          if (state is HomeError) {
             return HomeErrorWidget(
               title: state.message,
               info:
                   'Verifique sua conexão com a internet ou tente novamente para buscar o tempo na sua região!',
-              fun: () => bloc.getPositionAndWeather(),
+              fun: () => controller.getPositionAndWeather(),
             );
-          } else if (state is HomeSuccess) {
-            return BaseViewComponent(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildCity(state.weather),
-                _buildPrevision(state.weather),
-                _buildInfo(state.weather),
-                _buildDaysPrevision(state.weather),
-              ],
+          }
+
+          if (state is HomeSuccess) {
+            return SafeArea(
+              child: SpacingPage(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildCity(state.weather),
+                    _buildPrevision(state.weather),
+                    _buildInfo(state.weather),
+                    _buildDaysPrevision(state.weather),
+                  ],
+                ),
+              ),
             );
           }
 
@@ -82,7 +93,9 @@ class HomePage extends PageWidget<HomeBloc> {
                 weather.city,
                 style: AppFonts.headlineLarge(),
               ),
-              AppDimension.spacing_0,
+              const SizedBox(
+                height: AppDimension.small,
+              ),
               Text(
                 DateFormat("EEEE,  MMM d", "pt_BR").format(DateTime.now()),
                 style: AppFonts.bodyLarge(light: true),
@@ -91,11 +104,11 @@ class HomePage extends PageWidget<HomeBloc> {
           ),
         ),
         IconButton(
-          onPressed: () => bloc.getPositionAndWeather(),
+          onPressed: () => controller.getPositionAndWeather(),
           icon: const Icon(
             Icons.refresh_rounded,
-            size: AppDimension.size_4,
-            color: AppExtension.primary,
+            size: AppDimension.big,
+            color: AppStyles.primary,
           ),
         ),
       ],
@@ -110,7 +123,7 @@ class HomePage extends PageWidget<HomeBloc> {
           WeatherIconModel.weatherIcons[weather.conditionSlug].toString(),
           height: 115,
           colorFilter: const ColorFilter.mode(
-            AppExtension.primary,
+            AppStyles.primary,
             BlendMode.srcIn,
           ),
         ),
@@ -171,7 +184,7 @@ class HomePage extends PageWidget<HomeBloc> {
         },
         itemCount: weather.forecast.length,
         separatorBuilder: (__, _) => const SizedBox(
-          width: AppDimension.size_2,
+          width: AppDimension.large,
         ),
       ),
     );
