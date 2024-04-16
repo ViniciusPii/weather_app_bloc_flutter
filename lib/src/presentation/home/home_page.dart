@@ -11,10 +11,10 @@ import 'package:weather_app_bloc_flutter/src/core/ui/components/spacing_page.dar
 import 'package:weather_app_bloc_flutter/src/core/ui/components/three_bounce_component.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_icon_model.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
-import 'package:weather_app_bloc_flutter/src/modules/home/controller/home_bloc.dart';
-import 'package:weather_app_bloc_flutter/src/modules/home/widgets/card_day_prevision_component.dart';
-import 'package:weather_app_bloc_flutter/src/modules/home/widgets/card_info_component.dart';
-import 'package:weather_app_bloc_flutter/src/modules/home/widgets/home_error_widget.dart';
+import 'package:weather_app_bloc_flutter/src/presentation/home/controller/home_bloc.dart';
+import 'package:weather_app_bloc_flutter/src/presentation/home/widgets/card_day_prevision_component.dart';
+import 'package:weather_app_bloc_flutter/src/presentation/home/widgets/card_info_component.dart';
+import 'package:weather_app_bloc_flutter/src/presentation/home/widgets/home_error_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

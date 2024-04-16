@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:weather_app_bloc_flutter/src/modules/home/home_page.dart';
+import 'package:weather_app_bloc_flutter/src/presentation/home/home_page.dart';
 
 class Routes {
   static const String home = '/';
 
   late final routes = <String, WidgetBuilder>{
-    home: (context) => HomePage(),
+    home: (context) => const HomePage(),
   };
 
   T getParans<T>(BuildContext context) => ModalRoute.of(context)?.settings.arguments as T;
