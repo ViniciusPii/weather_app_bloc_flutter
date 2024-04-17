@@ -12,9 +12,10 @@ class GeolocationRepositoryImpl implements GeolocationRepository {
       bool active = await Geolocator.isLocationServiceEnabled();
 
       if (!active) {
-        throw AppException(
-          error: AppCodeErrors.geolocation,
-          message: 'Ative o serviço de Geolocalização',
+        throw GeolocationException(
+          title: 'Ative a sua localização!',
+          message:
+              'Nosso app precisa da sua localização! Isso nos permitirá mostrar as condições climáticas mais precisas no seu local!',
         );
       }
 
@@ -23,28 +24,30 @@ class GeolocationRepositoryImpl implements GeolocationRepository {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          throw AppException(
-            error: AppCodeErrors.geolocation,
-            message: 'Você negou a Permissão!',
+          throw GeolocationException(
+            title: 'Permissão negada!',
+            message:
+                'Precisamos da sua permissão para acessar sua localização! Tente novamente. Se não conseguir, habilite nas configurações ou desinstale e instale nosso app novamente!',
           );
         }
       }
 
       if (permission == LocationPermission.deniedForever) {
-        throw AppException(
-          error: AppCodeErrors.geolocation,
-          message: 'Não podemos mais pedir permissão!',
+        throw GeolocationException(
+          title: 'Permissão negada!',
+          message:
+              'Precisamos da sua permissão para acessar sua localização! Tente novamente. Se não conseguir, habilite nas configurações ou desinstale e instale nosso app novamente!',
         );
       }
 
       return await Geolocator.getCurrentPosition();
-    } on AppException catch (e) {
-      throw AppException(
-        error: AppCodeErrors.geolocation,
+    } on GeolocationException catch (e) {
+      throw GeolocationException(
+        title: e.title,
         message: e.message,
       );
     } catch (e) {
-      throw AppGenericException(message: 'Erro Genérico');
+      throw GeolocationException();
     }
   }
 }

@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_styles.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_dimension.dart';
-import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_fonts.dart';
+import 'package:weather_app_bloc_flutter/src/core/ui/components/app_label.dart';
+import 'package:weather_app_bloc_flutter/src/core/ui/components/app_title.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/components/spacing_page.dart';
 
 class HomeErrorWidget extends StatelessWidget {
   const HomeErrorWidget({
     super.key,
-    required this.title,
-    required this.info,
-    required this.fun,
+    required this.action,
+    this.title,
+    this.message,
   });
 
-  final String info;
-  final String title;
-  final Function() fun;
+  final String? title;
+  final String? message;
+  final Function() action;
 
   @override
   Widget build(BuildContext context) {
@@ -31,23 +32,21 @@ class HomeErrorWidget extends StatelessWidget {
             const SizedBox(
               height: AppDimension.large,
             ),
-            Text(
-              title,
-              style: AppFonts.titleLarge(),
+            AppTitle(
+              title: title ?? 'Ops! Algo deu errado',
             ),
             const SizedBox(
-              height: AppDimension.small,
+              height: AppDimension.large,
             ),
-            Text(
-              info,
-              style: AppFonts.bodyLarge(light: true),
-              textAlign: TextAlign.center,
+            AppLabel(
+              label: message ??
+                  'Não se preocupe, problemas acontecem! Tente novamente, se o erro persistir, tente novamente mais tarde!',
             ),
             const SizedBox(
-              height: AppDimension.mega,
+              height: AppDimension.jumbo,
             ),
             ElevatedButton(
-              onPressed: fun,
+              onPressed: action,
               child: const Text('Tentar Novamente'),
             ),
           ],

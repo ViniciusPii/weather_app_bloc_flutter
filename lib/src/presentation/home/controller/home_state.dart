@@ -22,10 +22,12 @@ class HomeSuccess extends HomeState {
 
 class HomeError extends HomeState {
   HomeError({
-    required this.message,
+    this.title,
+    this.message,
   }) : super();
 
-  final String message;
+  final String? title;
+  final String? message;
 }
 
 class HomeGeolocationError extends HomeState {

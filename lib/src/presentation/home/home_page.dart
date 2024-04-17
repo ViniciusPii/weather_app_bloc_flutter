@@ -42,19 +42,15 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
 
           if (state is HomeGeolocationError) {
             return HomeErrorWidget(
-              title: state.message,
-              info:
-                  'Precisamos da sua localização para que possamos mostrar a condição do tempo na sua região!',
-              fun: () => controller.getPositionAndWeather(),
+              action: () => controller.getPositionAndWeather(),
             );
           }
 
           if (state is HomeError) {
             return HomeErrorWidget(
-              title: state.message,
-              info:
-                  'Verifique sua conexão com a internet ou tente novamente para buscar o tempo na sua região!',
-              fun: () => controller.getPositionAndWeather(),
+              title: state.title,
+              message: state.message,
+              action: () => controller.getPositionAndWeather(),
             );
           }
 

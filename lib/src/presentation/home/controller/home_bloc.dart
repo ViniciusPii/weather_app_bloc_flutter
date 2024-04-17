@@ -28,8 +28,8 @@ class HomeBloc extends Cubit<HomeState> {
       );
 
       emit(HomeSuccess(weather: weather));
-    } on AppException catch (e) {
-      emit(HomeError(message: e.message));
+    } on GeolocationException catch (e) {
+      emit(HomeError(title: e.title, message: e.message));
     }
   }
 }
