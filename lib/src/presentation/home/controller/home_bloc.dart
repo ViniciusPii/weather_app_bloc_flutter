@@ -1,7 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:weather_app_bloc_flutter/src/core/exceptions/app_exception.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
+import 'package:weather_app_bloc_flutter/src/repositories/geolocation/errors/geolocation_exceptions.dart';
 import 'package:weather_app_bloc_flutter/src/repositories/geolocation/geolocation_repository.dart';
+import 'package:weather_app_bloc_flutter/src/repositories/weather/errors/weather_exceptions.dart';
 import 'package:weather_app_bloc_flutter/src/repositories/weather/weather_repository.dart';
 
 part 'home_state.dart';
@@ -29,6 +30,8 @@ class HomeBloc extends Cubit<HomeState> {
 
       emit(HomeSuccess(weather: weather));
     } on GeolocationException catch (e) {
+      emit(HomeError(title: e.title, message: e.message));
+    } on WeatherException catch (e) {
       emit(HomeError(title: e.title, message: e.message));
     }
   }

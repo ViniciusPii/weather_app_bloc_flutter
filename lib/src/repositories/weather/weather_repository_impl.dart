@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:weather_app_bloc_flutter/src/app_env.dart';
-import 'package:weather_app_bloc_flutter/src/core/exceptions/app_exception.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
+import 'package:weather_app_bloc_flutter/src/repositories/weather/errors/weather_exceptions.dart';
 
 import 'weather_repository.dart';
 
@@ -21,9 +21,10 @@ class WeatherRepositoryImpl implements WeatherRepository {
 
       return weather;
     } catch (e) {
-      throw AppException(
-        message: 'Indisponibilidade no sitema!',
-        error: AppCodeErrors.weather,
+      throw WeatherException(
+        title: 'Indisponibilidade no sitema!',
+        message:
+            'Parece que você não está conectado em uma rede! Verifique a sua conexão e tente novamente!',
       );
     }
   }

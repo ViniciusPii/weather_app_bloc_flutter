@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:weather_app_bloc_flutter/src/core/exceptions/app_exception.dart';
+import 'package:weather_app_bloc_flutter/src/repositories/geolocation/errors/geolocation_exceptions.dart';
 
 import 'geolocation_repository.dart';
 
