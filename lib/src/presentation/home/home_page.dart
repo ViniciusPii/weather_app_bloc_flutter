@@ -36,17 +36,11 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
       body: BlocBuilder<HomeBloc, HomeState>(
         bloc: controller,
         builder: (context, state) {
-          if (state is HomeLoading) {
+          if (state is HomeLoadingState) {
             return const Center(child: ThreeBounceComponent());
           }
 
-          if (state is HomeGeolocationError) {
-            return HomeErrorWidget(
-              action: () => controller.getPositionAndWeather(),
-            );
-          }
-
-          if (state is HomeError) {
+          if (state is HomeErrorState) {
             return HomeErrorWidget(
               title: state.title,
               message: state.message,
@@ -54,7 +48,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
             );
           }
 
-          if (state is HomeSuccess) {
+          if (state is HomeSuccessState) {
             return SafeArea(
               child: SpacingPage(
                 child: Column(

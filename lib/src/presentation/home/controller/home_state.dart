@@ -1,39 +1,31 @@
 part of 'home_bloc.dart';
 
-abstract class HomeState {
+sealed class HomeState {
   HomeState();
 }
 
-class HomeInitial extends HomeState {
-  HomeInitial() : super();
+class HomeInitialState extends HomeState {
+  HomeInitialState();
 }
 
-class HomeLoading extends HomeState {
-  HomeLoading() : super();
+class HomeLoadingState extends HomeState {
+  HomeLoadingState();
 }
 
-class HomeSuccess extends HomeState {
-  HomeSuccess({
+class HomeSuccessState extends HomeState {
+  HomeSuccessState({
     required this.weather,
-  }) : super();
+  });
 
   final WeatherModel weather;
 }
 
-class HomeError extends HomeState {
-  HomeError({
+class HomeErrorState extends HomeState {
+  HomeErrorState({
     this.title,
     this.message,
-  }) : super();
+  });
 
   final String? title;
   final String? message;
-}
-
-class HomeGeolocationError extends HomeState {
-  HomeGeolocationError({
-    required this.message,
-  }) : super();
-
-  final String message;
 }

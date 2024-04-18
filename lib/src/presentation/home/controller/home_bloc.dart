@@ -13,13 +13,13 @@ class HomeBloc extends Cubit<HomeState> {
     required GeolocationRepository geolocationRepository,
   })  : _weatherRepository = weatherRepository,
         _geolocationRepository = geolocationRepository,
-        super(HomeInitial());
+        super(HomeInitialState());
 
   final WeatherRepository _weatherRepository;
   final GeolocationRepository _geolocationRepository;
 
   Future<void> getPositionAndWeather() async {
-    emit(HomeLoading());
+    emit(HomeLoadingState());
     try {
       final position = await _geolocationRepository.currentPosition();
 
@@ -28,11 +28,11 @@ class HomeBloc extends Cubit<HomeState> {
         position.longitude,
       );
 
-      emit(HomeSuccess(weather: weather));
+      emit(HomeSuccessState(weather: weather));
     } on GeolocationException catch (e) {
-      emit(HomeError(title: e.title, message: e.message));
+      emit(HomeErrorState(title: e.title, message: e.message));
     } on WeatherException catch (e) {
-      emit(HomeError(title: e.title, message: e.message));
+      emit(HomeErrorState(title: e.title, message: e.message));
     }
   }
 }
