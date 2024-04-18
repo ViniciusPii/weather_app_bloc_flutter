@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:weather_app_bloc_flutter/src/core/external/http_service.dart';
 import 'package:weather_app_bloc_flutter/src/external/dio_http_service_impl.dart';
@@ -20,8 +19,7 @@ class Injection {
   }
 
   static void _configureServices() {
-    di.registerLazySingleton(() => Dio());
-    di.registerLazySingleton<HttpService>(() => DioHttpServiceImpl(dio: di.get()));
+    di.registerLazySingleton<HttpService>(() => DioHttpServiceImpl());
   }
 
   static void _configureRepositories() {

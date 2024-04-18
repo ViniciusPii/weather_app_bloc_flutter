@@ -3,13 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:weather_app_bloc_flutter/src/app_env.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_styles.dart';
+import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_colors.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_dimension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_fonts.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/base_bloc_state.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/components/spacing_page.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/components/three_bounce_component.dart';
-import 'package:weather_app_bloc_flutter/src/models/weather_icon_model.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 import 'package:weather_app_bloc_flutter/src/presentation/home/controller/home_bloc.dart';
 import 'package:weather_app_bloc_flutter/src/presentation/home/widgets/card_day_prevision_component.dart';
@@ -109,13 +110,9 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        SvgPicture.asset(
-          WeatherIconModel.weatherIcons[weather.conditionSlug].toString(),
+        SvgPicture.network(
+          AppEnv.imagePath(weather.conditionSlug),
           height: 115,
-          colorFilter: const ColorFilter.mode(
-            AppStyles.primary,
-            BlendMode.srcIn,
-          ),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -151,6 +148,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
         ),
         CardInfoComponent(
           title: 'Humidade do ar',
+          color: AppColors.blue600,
           icon: FontAwesomeIcons.droplet,
           info: '${weather.humidity.toString()} %',
         ),
@@ -169,7 +167,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
 
           return CardDayPrevisionComponent(
             forecast: forecast,
-            icon: WeatherIconModel.weatherIcons[forecast.condition].toString(),
+            icon: AppEnv.imagePath(forecast.condition),
           );
         },
         itemCount: weather.forecast.length,

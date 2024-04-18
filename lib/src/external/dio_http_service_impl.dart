@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:weather_app_bloc_flutter/src/app_env.dart';
 
 import '/src/core/errors/app_exceptions.dart';
 import '/src/core/external/app_client_response.dart';
@@ -6,9 +7,11 @@ import '/src/core/external/app_log.dart';
 import '/src/core/external/http_service.dart';
 
 class DioHttpServiceImpl implements HttpService {
-  DioHttpServiceImpl({required Dio dio}) : _dio = dio;
+  DioHttpServiceImpl() {
+    _dio = Dio(BaseOptions(baseUrl: AppEnv.baseUrl));
+  }
 
-  final Dio _dio;
+  late final Dio _dio;
 
   @override
   Future<AppClientResponse<T>> get<T>(String path) async {

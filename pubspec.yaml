@@ -40,20 +40,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   geolocator: ^11.0.0
-  flutter_native_splash: ^2.2.0
   google_fonts: ^6.2.1
   intl: ^0.18.1
   get_it: ^7.7.0
   bloc: ^8.1.4
   flutter_bloc: ^8.1.5
-
-
-flutter_native_splash:
-  color: '#ffffff'
-  image: 'assets/images/tempo.png'
-
-  android_12:
-    icon_background_color: '#ffffff'
 
 dev_dependencies:
   flutter_test:

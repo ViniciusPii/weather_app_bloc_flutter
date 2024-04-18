@@ -41,13 +41,9 @@ class CardDayPrevisionComponent extends StatelessWidget {
           ),
           Row(
             children: [
-              SvgPicture.asset(
+              SvgPicture.network(
                 icon,
                 height: AppDimension.jumbo,
-                colorFilter: const ColorFilter.mode(
-                  AppStyles.primary,
-                  BlendMode.srcIn,
-                ),
               ),
               const SizedBox(
                 width: AppDimension.large,
