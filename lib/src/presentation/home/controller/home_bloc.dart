@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app_bloc_flutter/src/data/data_sources/geolocation/errors/geolocation_exceptions.dart';
+import 'package:weather_app_bloc_flutter/src/domain/use_cases/geolocation/get_current_position_use_case.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
-import 'package:weather_app_bloc_flutter/src/repositories/geolocation/errors/geolocation_exceptions.dart';
-import 'package:weather_app_bloc_flutter/src/repositories/geolocation/geolocation_repository.dart';
 import 'package:weather_app_bloc_flutter/src/repositories/weather/errors/weather_exceptions.dart';
 import 'package:weather_app_bloc_flutter/src/repositories/weather/weather_repository.dart';
 
@@ -10,18 +10,18 @@ part 'home_state.dart';
 class HomeBloc extends Cubit<HomeState> {
   HomeBloc({
     required WeatherRepository weatherRepository,
-    required GeolocationRepository geolocationRepository,
+    required GetCurrentPositionUseCase getCurrentPositionUseCase,
   })  : _weatherRepository = weatherRepository,
-        _geolocationRepository = geolocationRepository,
+        _getCurrentPositionUseCase = getCurrentPositionUseCase,
         super(HomeInitialState());
 
   final WeatherRepository _weatherRepository;
-  final GeolocationRepository _geolocationRepository;
+  final GetCurrentPositionUseCase _getCurrentPositionUseCase;
 
   Future<void> getPositionAndWeather() async {
     emit(HomeLoadingState());
     try {
-      final position = await _geolocationRepository.currentPosition();
+      final position = await _getCurrentPositionUseCase();
 
       final weather = await _weatherRepository.getWeather(
         position.latitude,

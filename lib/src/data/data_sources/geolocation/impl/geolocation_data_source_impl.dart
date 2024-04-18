@@ -1,9 +1,8 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:weather_app_bloc_flutter/src/repositories/geolocation/errors/geolocation_exceptions.dart';
+import 'package:weather_app_bloc_flutter/src/data/data_sources/geolocation/errors/geolocation_exceptions.dart';
+import 'package:weather_app_bloc_flutter/src/data/data_sources/geolocation/geolocation_data_source.dart';
 
-import 'geolocation_repository.dart';
-
-class GeolocationRepositoryImpl implements GeolocationRepository {
+class GeolocationDataSourceImpl implements GeolocationDataSource {
   @override
   Future<Position> currentPosition() async {
     try {
