@@ -1,14 +1,17 @@
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import '/src/core/external/app_client_response.dart';
+import '/src/core/external/app_log_client_response.dart';
 
 class AppLog {
   AppLog._();
 
-  static void showLog(AppClientResponse response) {
+  static void showLog(AppLogClientResponse response) {
     final logMessage = StringBuffer();
 
+    logMessage.write(separatorLine());
+
+    logMessage.write('Path: ${response.path}\n');
     logMessage.write(separatorLine());
 
     if (response.data != null && response.data.isNotEmpty) {
