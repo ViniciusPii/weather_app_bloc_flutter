@@ -1,12 +1,11 @@
 import 'package:weather_app_bloc_flutter/src/core/errors/app_exceptions.dart';
 import 'package:weather_app_bloc_flutter/src/core/external/http_service.dart';
+import 'package:weather_app_bloc_flutter/src/data/data_sources/weather/errors/weather_exceptions.dart';
+import 'package:weather_app_bloc_flutter/src/data/data_sources/weather/weather_data_source.dart';
 import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
-import 'package:weather_app_bloc_flutter/src/repositories/weather/errors/weather_exceptions.dart';
 
-import 'weather_repository.dart';
-
-class WeatherRepositoryImpl implements WeatherRepository {
-  WeatherRepositoryImpl({
+class WeatherDataSourceImpl implements WeatherDataSource {
+  WeatherDataSourceImpl({
     required HttpService http,
   }) : _http = http;
 
