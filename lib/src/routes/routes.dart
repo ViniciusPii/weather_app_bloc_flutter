@@ -4,7 +4,7 @@ import 'package:weather_app_bloc_flutter/src/presentation/home/home_page.dart';
 class Routes {
   static const String home = '/';
 
-  late final routes = <String, WidgetBuilder>{
+  final routes = <String, WidgetBuilder>{
     home: (context) => const HomePage(),
   };
 

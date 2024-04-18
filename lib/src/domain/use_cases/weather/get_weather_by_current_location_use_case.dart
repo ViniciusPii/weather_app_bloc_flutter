@@ -1,5 +1,5 @@
-import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
+import 'package:weather_app_bloc_flutter/src/domain/entities/weather_entity.dart';
 
 abstract class GetWeatherByCurrentLocationUseCase {
-  Future<WeatherModel> call();
+  Future<WeatherEntity> call();
 }

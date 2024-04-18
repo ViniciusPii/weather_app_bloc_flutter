@@ -2,7 +2,8 @@ import 'package:weather_app_bloc_flutter/src/core/errors/app_exceptions.dart';
 import 'package:weather_app_bloc_flutter/src/core/external/http_service.dart';
 import 'package:weather_app_bloc_flutter/src/data/data_sources/weather/errors/weather_exceptions.dart';
 import 'package:weather_app_bloc_flutter/src/data/data_sources/weather/weather_data_source.dart';
-import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
+import 'package:weather_app_bloc_flutter/src/data/extensions/weather/weather_extension.dart';
+import 'package:weather_app_bloc_flutter/src/domain/entities/weather_entity.dart';
 
 class WeatherDataSourceImpl implements WeatherDataSource {
   WeatherDataSourceImpl({
@@ -12,13 +13,13 @@ class WeatherDataSourceImpl implements WeatherDataSource {
   final HttpService _http;
 
   @override
-  Future<WeatherModel> getWeather(double lat, double long) async {
+  Future<WeatherEntity> getWeather(double lat, double long) async {
     final String baseUrl = 'lat=$lat&lon=$long&user_ip=remote';
 
     try {
       final response = await _http.get(baseUrl);
 
-      final weather = WeatherModel.fromMap(response.data['results']);
+      final weather = WeatherExtension.fromMap(response.data['results']);
 
       return weather;
     } on AppNetworkException catch (_) {

@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:weather_app_bloc_flutter/src/data/data_sources/geolocation/errors/geolocation_exceptions.dart';
 import 'package:weather_app_bloc_flutter/src/data/data_sources/weather/errors/weather_exceptions.dart';
+import 'package:weather_app_bloc_flutter/src/domain/entities/weather_entity.dart';
 import 'package:weather_app_bloc_flutter/src/domain/use_cases/weather/get_weather_by_current_location_use_case.dart';
-import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
 
 part 'home_state.dart';
 

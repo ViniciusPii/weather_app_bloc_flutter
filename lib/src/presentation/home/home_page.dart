@@ -11,7 +11,7 @@ import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_fonts.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/base_bloc_state.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/components/spacing_page.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/components/three_bounce_component.dart';
-import 'package:weather_app_bloc_flutter/src/models/weather_model.dart';
+import 'package:weather_app_bloc_flutter/src/domain/entities/weather_entity.dart';
 import 'package:weather_app_bloc_flutter/src/presentation/home/controller/home_bloc.dart';
 import 'package:weather_app_bloc_flutter/src/presentation/home/widgets/card_day_prevision_component.dart';
 import 'package:weather_app_bloc_flutter/src/presentation/home/widgets/card_info_component.dart';
@@ -72,7 +72,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
     );
   }
 
-  Widget _buildCity(WeatherModel weather) {
+  Widget _buildCity(WeatherEntity weather) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -106,7 +106,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
     );
   }
 
-  Widget _buildPrevision(WeatherModel weather) {
+  Widget _buildPrevision(WeatherEntity weather) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -133,7 +133,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
     );
   }
 
-  Widget _buildInfo(WeatherModel weather) {
+  Widget _buildInfo(WeatherEntity weather) {
     return Column(
       children: [
         CardInfoComponent(
@@ -156,7 +156,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
     );
   }
 
-  Widget _buildDaysPrevision(WeatherModel weather) {
+  Widget _buildDaysPrevision(WeatherEntity weather) {
     return SizedBox(
       height: 115,
       child: ListView.separated(

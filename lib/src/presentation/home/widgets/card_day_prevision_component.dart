@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_styles.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_dimension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_fonts.dart';
-import 'package:weather_app_bloc_flutter/src/models/forecast_model.dart';
+import 'package:weather_app_bloc_flutter/src/domain/entities/forecast_entity.dart';
 
 class CardDayPrevisionComponent extends StatelessWidget {
   const CardDayPrevisionComponent({
@@ -14,7 +14,7 @@ class CardDayPrevisionComponent extends StatelessWidget {
   });
 
   final String icon;
-  final ForecastModel forecast;
+  final ForecastEntity forecast;
 
   @override
   Widget build(BuildContext context) {

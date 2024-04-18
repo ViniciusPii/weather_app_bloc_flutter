@@ -17,7 +17,7 @@ class HomeSuccessState extends HomeState {
     required this.weather,
   });
 
-  final WeatherModel weather;
+  final WeatherEntity weather;
 }
 
 class HomeErrorState extends HomeState {
