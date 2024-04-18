@@ -3,6 +3,6 @@ import 'package:weather_app_bloc_flutter/src/app.dart';
 import 'package:weather_app_bloc_flutter/src/di/injection.dart';
 
 void main() {
-  injection();
+  Injection.configure();
   runApp(const App());
 }

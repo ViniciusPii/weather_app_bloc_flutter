@@ -10,20 +10,31 @@ import 'package:weather_app_bloc_flutter/src/repositories/weather/weather_reposi
 
 GetIt get di => GetIt.instance;
 
-injection() {
-  //services
-  di.registerLazySingleton(() => Dio());
-  di.registerLazySingleton<HttpService>(() => DioHttpServiceImpl(dio: di.get()));
+class Injection {
+  Injection._();
 
-  //repositories
-  di.registerLazySingleton<GeolocationRepository>(() => GeolocationRepositoryImpl());
-  di.registerLazySingleton<WeatherRepository>(() => WeatherRepositoryImpl(http: di.get()));
+  static configure() {
+    _configureServices();
+    _configureRepositories();
+    _configureControllers();
+  }
 
-  //controllers
-  di.registerFactory(
-    () => HomeBloc(
-      weatherRepository: di.get(),
-      geolocationRepository: di.get(),
-    ),
-  );
+  static void _configureServices() {
+    di.registerLazySingleton(() => Dio());
+    di.registerLazySingleton<HttpService>(() => DioHttpServiceImpl(dio: di.get()));
+  }
+
+  static void _configureRepositories() {
+    di.registerLazySingleton<GeolocationRepository>(() => GeolocationRepositoryImpl());
+    di.registerLazySingleton<WeatherRepository>(() => WeatherRepositoryImpl(http: di.get()));
+  }
+
+  static void _configureControllers() {
+    di.registerFactory(
+      () => HomeBloc(
+        weatherRepository: di.get(),
+        geolocationRepository: di.get(),
+      ),
+    );
+  }
 }
