@@ -27,7 +27,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
   @override
   void onReady(BuildContext context) {
-    controller.getPositionAndWeather();
+    controller.getWeatherByCurrentLocation();
     super.onReady(context);
   }
 
@@ -45,7 +45,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
             return HomeErrorWidget(
               title: state.title,
               message: state.message,
-              action: () => controller.getPositionAndWeather(),
+              action: () => controller.getWeatherByCurrentLocation(),
             );
           }
 
@@ -95,7 +95,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
           ),
         ),
         IconButton(
-          onPressed: () => controller.getPositionAndWeather(),
+          onPressed: () => controller.getWeatherByCurrentLocation(),
           icon: const Icon(
             Icons.refresh_rounded,
             size: AppDimension.big,

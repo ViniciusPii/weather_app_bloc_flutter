@@ -14,7 +14,7 @@ class HomeBloc extends Cubit<HomeState> {
 
   final GetWeatherByCurrentLocationUseCase _getWeatherByCurrentLocationUseCase;
 
-  Future<void> getPositionAndWeather() async {
+  Future<void> getWeatherByCurrentLocation() async {
     emit(HomeLoadingState());
     try {
       final weather = await _getWeatherByCurrentLocationUseCase();
