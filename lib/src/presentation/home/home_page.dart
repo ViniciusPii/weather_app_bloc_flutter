@@ -165,7 +165,7 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
 
   Widget _buildDaysPrevision(WeatherEntity weather) {
     return SizedBox(
-      height: 130,
+      height: 125,
       child: ListView.separated(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,

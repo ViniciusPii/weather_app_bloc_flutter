@@ -21,10 +21,7 @@ class CardDayPrevisionComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(
-        vertical: AppDimension.large,
-        horizontal: AppDimension.extraLarge,
-      ),
+      padding: const EdgeInsets.all(AppDimension.large),
       decoration: BoxDecoration(
         color: AppStyles.primaryLight,
         borderRadius: BorderRadius.circular(
