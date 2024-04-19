@@ -1,3 +1,4 @@
+import 'package:weather_app_bloc_flutter/src/app_env.dart';
 import 'package:weather_app_bloc_flutter/src/core/errors/app_exceptions.dart';
 import 'package:weather_app_bloc_flutter/src/core/external/http_service.dart';
 import 'package:weather_app_bloc_flutter/src/data/data_sources/weather/errors/weather_exceptions.dart';
@@ -14,7 +15,7 @@ class WeatherDataSourceImpl implements WeatherDataSource {
 
   @override
   Future<WeatherEntity> getWeather(double lat, double long) async {
-    final String baseUrl = 'lat=$lat&lon=$long&user_ip=remote';
+    final String baseUrl = '?key=${AppEnv.userKey}&lat=$lat&lon=$long&user_ip=remote';
 
     try {
       final response = await _http.get(baseUrl);
