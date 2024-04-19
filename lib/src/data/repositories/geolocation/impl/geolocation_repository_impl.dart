@@ -1,14 +1,18 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:weather_app_bloc_flutter/src/data/data_sources/geolocation/geolocation_data_source.dart';
 import 'package:weather_app_bloc_flutter/src/data/repositories/geolocation/geolocation_repository.dart';
 
 class GeolocationRepositoryImpl implements GeolocationRepository {
-  GeolocationRepositoryImpl({
-    required GeolocationDataSource dataSource,
-  }) : _dataSource = dataSource;
-
-  final GeolocationDataSource _dataSource;
+  GeolocationRepositoryImpl();
 
   @override
-  Future<Position> currentPosition() async => _dataSource.currentPosition();
+  Future<LocationPermission> checkPermission() async => await Geolocator.checkPermission();
+
+  @override
+  Future<Position> getCurrentPosition() async => await Geolocator.getCurrentPosition();
+
+  @override
+  Future<bool> isActive() async => await Geolocator.isLocationServiceEnabled();
+
+  @override
+  Future<LocationPermission> requestPermission() async => await Geolocator.requestPermission();
 }

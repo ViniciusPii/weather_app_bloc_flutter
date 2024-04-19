@@ -1,7 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:weather_app_bloc_flutter/src/core/external/http_service.dart';
-import 'package:weather_app_bloc_flutter/src/data/data_sources/geolocation/geolocation_data_source.dart';
-import 'package:weather_app_bloc_flutter/src/data/data_sources/geolocation/impl/geolocation_data_source_impl.dart';
 import 'package:weather_app_bloc_flutter/src/data/data_sources/weather/impl/weather_data_source_impl.dart';
 import 'package:weather_app_bloc_flutter/src/data/data_sources/weather/weather_data_source.dart';
 import 'package:weather_app_bloc_flutter/src/data/repositories/geolocation/geolocation_repository.dart';
@@ -35,10 +33,6 @@ class Injection {
   }
 
   static void _configureDataSources() {
-    di.registerLazySingleton<GeolocationDataSource>(
-      () => GeolocationDataSourceImpl(),
-    );
-
     di.registerLazySingleton<WeatherDataSource>(
       () => WeatherDataSourceImpl(
         http: di.get(),
@@ -48,9 +42,7 @@ class Injection {
 
   static void _configureRepositories() {
     di.registerLazySingleton<GeolocationRepository>(
-      () => GeolocationRepositoryImpl(
-        dataSource: di.get(),
-      ),
+      () => GeolocationRepositoryImpl(),
     );
 
     di.registerLazySingleton<WeatherRepository>(
