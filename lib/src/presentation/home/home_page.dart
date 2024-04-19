@@ -11,6 +11,7 @@ import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_fonts.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/base_bloc_state.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/components/spacing_page.dart';
 import 'package:weather_app_bloc_flutter/src/core/ui/components/three_bounce_component.dart';
+import 'package:weather_app_bloc_flutter/src/domain/entities/forecast_entity.dart';
 import 'package:weather_app_bloc_flutter/src/domain/entities/weather_entity.dart';
 import 'package:weather_app_bloc_flutter/src/presentation/home/controller/home_bloc.dart';
 import 'package:weather_app_bloc_flutter/src/presentation/home/widgets/card_day_prevision_component.dart';
@@ -112,22 +113,28 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
       children: [
         SvgPicture.network(
           AppEnv.imagePath(weather.conditionSlug),
-          height: 115,
+          height: 120,
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Text(
-              '${weather.temp} °',
-              style: AppFonts.displayLarge().copyWith(
-                fontWeight: FontWeight.bold,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${weather.temp} °',
+                style: AppFonts.displayLarge().copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              weather.description,
-              style: AppFonts.bodyLarge(light: true),
-            ),
-          ],
+              Text(
+                weather.description,
+                style: AppFonts.bodyLarge(light: true),
+              ),
+              Text(
+                'Chuva ${weather.forecast.first.rainProbability.toString()} %',
+                style: AppFonts.bodyLarge(light: true),
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -158,12 +165,12 @@ class _HomePageState extends BaseBlocState<HomePage, HomeBloc> {
 
   Widget _buildDaysPrevision(WeatherEntity weather) {
     return SizedBox(
-      height: 115,
+      height: 130,
       child: ListView.separated(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          final forecast = weather.forecast[index];
+          final ForecastEntity forecast = weather.forecast[index];
 
           return CardDayPrevisionComponent(
             forecast: forecast,

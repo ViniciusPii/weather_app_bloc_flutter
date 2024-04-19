@@ -8,7 +8,7 @@ extension ForecastExtension on ForecastEntity {
       date: map['date'] ?? '',
       weekday: map['weekday'] ?? '',
       condition: map['condition'] ?? '',
-      description: map['description'] ?? '',
+      rainProbability: map['rain_probability'] ?? '',
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/app_styles.dart';
+import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_colors.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_dimension.dart';
 import 'package:weather_app_bloc_flutter/src/core/theme/infra/app_fonts.dart';
 import 'package:weather_app_bloc_flutter/src/domain/entities/forecast_entity.dart';
@@ -31,13 +33,11 @@ class CardDayPrevisionComponent extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             _changeTitle(),
             style: AppFonts.labelLarge(),
-          ),
-          const SizedBox(
-            height: AppDimension.large,
           ),
           Row(
             children: [
@@ -50,17 +50,45 @@ class CardDayPrevisionComponent extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text(
-                    '${forecast.max}°',
-                    style: AppFonts.labelMedium(),
+                  Row(
+                    children: [
+                      Text(
+                        '${forecast.max}°',
+                        style: AppFonts.labelLarge(),
+                      ),
+                      const SizedBox(
+                        width: AppDimension.small,
+                      ),
+                      const Icon(
+                        FontAwesomeIcons.upLong,
+                        size: 12,
+                        color: AppColors.red,
+                      )
+                    ],
                   ),
-                  Text(
-                    '${forecast.min}°',
-                    style: AppFonts.labelMedium(),
+                  Row(
+                    children: [
+                      Text(
+                        '${forecast.min}°',
+                        style: AppFonts.labelLarge(),
+                      ),
+                      const SizedBox(
+                        width: AppDimension.small,
+                      ),
+                      const Icon(
+                        FontAwesomeIcons.downLong,
+                        size: 12,
+                        color: AppColors.blue600,
+                      )
+                    ],
                   ),
                 ],
-              )
+              ),
             ],
+          ),
+          Text(
+            'Chuva ${forecast.rainProbability.toString()}%',
+            style: AppFonts.labelLarge(),
           ),
         ],
       ),

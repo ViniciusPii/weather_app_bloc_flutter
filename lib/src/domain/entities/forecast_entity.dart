@@ -5,7 +5,7 @@ class ForecastEntity {
     required this.date,
     required this.weekday,
     required this.condition,
-    required this.description,
+    required this.rainProbability,
   });
 
   final int max;
@@ -13,5 +13,5 @@ class ForecastEntity {
   final String date;
   final String weekday;
   final String condition;
-  final String description;
+  final int rainProbability;
 }
